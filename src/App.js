@@ -7,8 +7,8 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        localStorage.setItem('username','Sergio');
-        localStorage.setItem('password','hola');
+        localStorage.setItem('username','nico');
+        localStorage.setItem('password','nico1');
     }
 
     render() {

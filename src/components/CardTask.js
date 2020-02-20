@@ -1,9 +1,11 @@
 import React from "react";
+import FaceRoundedIcon from '@material-ui/icons/FaceRounded';
 import Card from "@material-ui/core/Card";
 import {CardContent, CssBaseline, Typography} from "@material-ui/core";
-import progress from '../images/progress.svg';
-import ready from '../images/ready.svg';
-import completed from '../images/completed.svg';
+
+
+import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
+import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded';
 import './CardTask.css';
 
 export class CardTask extends React.Component{
@@ -28,9 +30,9 @@ export class CardTask extends React.Component{
                                     </Typography>
                                 </div>
                                 <div>
-                                    {this.props.info.status === 'In Progress' ? <img src={progress} alt="progress"/> : <div/>}
-                                    {this.props.info.status === 'Ready' ? <img src={ready} alt="ready"/> : <div/>}
-                                    {this.props.info.status === 'Completed' ? <img src={completed} alt="completed"/> : <div/>}
+                                    {this.props.info.status === 'In Progress' ? <VpnKeyRoundedIcon alt="progress"/> : <div/>}
+                                    {this.props.info.status === 'Ready' ? <ExitToAppRoundedIcon alt="ready"/> : <div/>}
+                                    {this.props.info.status === 'Completed' ? <FaceRoundedIcon alt="completed"/> : <div/>}
                                 </div>
                             </div>
                             <Typography variant="h6">

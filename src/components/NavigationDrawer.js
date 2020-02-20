@@ -7,14 +7,15 @@ import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import user from '../images/user.svg';
-import logout from '../images/logout.svg';
-import edit from '../images/edit.svg';
+
 import Link from "@material-ui/core/Link";
 import {CardTask} from "../components/CardTask";
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import AssignmentIndOutlinedIcon from '@material-ui/icons/AssignmentIndOutlined';
 import classNames from 'classnames';
+import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
+import MeetingRoomOutlinedIcon from '@material-ui/icons/MeetingRoomOutlined';
 
 const styles = theme => ({
     appBar: {
@@ -148,17 +149,17 @@ class NavigationDrawer extends React.Component{
                     <div className={classes.list}>
                         <List>
                             <ListItem>
-                                <img src={user} alt="user" className="img2"/>
-                                <ListItemText primary="Sergio Peña" secondary="sergio@gmail.com" />
+                                <AssignmentIndOutlinedIcon className="img2"/>
+                                <ListItemText primary="Nicolas Patiño" secondary="nico@inventado.com" />
                             </ListItem>
                         </List>
                         <div className="right">
-                            <img src={edit} alt="edit"/>
+                            <PermIdentityOutlinedIcon alt="edit"/>
                         </div>
                     </div>
                     <Divider/>
                     <div className="bottom">
-                        <img src={logout} alt="logout"/>
+                        <MeetingRoomOutlinedIcon alt="logout"/>
                         <Link href="/">Logout</Link>
                     </div>
                 </Drawer>
