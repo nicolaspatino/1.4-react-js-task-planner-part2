@@ -1,59 +1,141 @@
-import React from "react";
-import TextField from '@material-ui/core/TextField';
-import Paper from "@material-ui/core/es/Paper/Paper";
-import './Login.css';
+import React from 'react';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import './Login.css'
+import { Redirect } from "react-router-dom";
+import axios from 'axios';
+
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import {Button, Typography} from "@material-ui/core";
-import Link from "@material-ui/core/Link";
+
 
 export class Login extends React.Component {
-
     constructor(props) {
         super(props);
-        this.state = {username: "", password: ""};
-        this.handleLogin = this.handleLogin.bind(this);
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.state = { email: "", password:"",isLogged: JSON.parse(localStorage.getItem("isLogged")),createAccount:false };
+        this.handleEmail = this.handleEmail.bind(this);
+        this.handlePassword = this.handlePassword.bind(this);
+        this.handleLogin = this.handleLogin.bind(this);  
+        this.handleCreate = this.handleCreate.bind(this);
+      
     }
-
-    handleLogin() {
-        if (this.state.username === localStorage.getItem('username') && this.state.password === localStorage.getItem('password')) {
-            localStorage.setItem('page', 'home');
-            console.log('Logged');
-        }
+    handleEmail(e) {
         this.setState({
-            username: "",
-            password: ""
+            email: e.target.value
         });
     }
 
-    handleUsernameChange(e) {
-        this.setState({
-            username: e.target.value
-        })
-    }
-
-    handlePasswordChange(e) {
+    handlePassword(e) {
         this.setState({
             password: e.target.value
-        })
+        });
     }
+    handleCreate(e) {
+        this.setState({
+            createAccount: true
+        });
+    }
+    handleLogin(e) {        
+        e.preventDefault();
+        const self= this;
+        axios.get(`http://localhost:8080/User/`+this.state.email)
+          .then(datos => {
+            if(datos.data){
+                if(datos.data.password===self.state.password){
+                    localStorage.setItem("email", self.state.email);  
+                    localStorage.setItem("id", datos.data.id);  
+                    localStorage.setItem("isLogged", "true");  
+                    self.setState({isLogged:true})
+                }else{
+                    alert("email o contraseñea equivocada");
+                }
+            } else{
+                alert("email o contraseñea equivocada");
+            }
+          })  .catch(function (error) {
+            alert("email o contraseñea equivocada");
+         });       
+     }
+                   
+       
+    
 
     render() {
+        if(this.state.isLogged===true){             
+            return <Redirect to={{
+                pathname: '/main',
+            }}
+            />
+        }
+        if(this.state.createAccount===true){             
+            return <Redirect to={{
+                pathname: '/Createaccount',
+            }}
+            />
+        }
+        const butonStyle={
+            marginTop: 10
+        }
         return (
-            <Paper className="paper">
-                <Typography variant="h4" color="primary">Task Planner</Typography>
-                <AssignmentIcon color="primary" style={{ fontSize: 60 }}/>
-                <form className="form" onSubmit={this.handleLogin}>
-                    <TextField required label="Username" margin="normal" variant="filled" onChange={this.handleUsernameChange}/>
-                    <br/>
-                    <TextField required type="password" label="Password" margin="normal" variant="filled" onChange={this.handlePasswordChange}/>
-                    <br/>
-                    <Button type="submit" variant="outlined" color="primary">Login</Button>
-                </form>
-                <br/>
-                <Link href="#" variant="body2">Create Account</Link>
-            </Paper>
+            <React.Fragment>
+                <CssBaseline />
+                <main className="layout">
+                    <Paper className="paper">
+                        <Typography variant="h4" color ="primary">Task Planner</Typography>
+                        <AssignmentIcon color = "primary" style ={{ fontSize: 60}}/>
+                        <form className="form">
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <Input id="email" name="email" autoComplete="email"
+                                    onChange={this.handleEmail}
+                                    value={this.state.email}
+                                    autoFocus />
+                            </FormControl>
+                            <FormControl margin="normal" required fullWidth>
+                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <Input
+                                    name="password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    onChange={this.handlePassword}
+                                    value={this.state.password}
+                                />
+                            </FormControl>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="raised"
+                                color="primary"
+                                className="submit"
+                                style={butonStyle}
+                                onClick={this.handleLogin}
+                            >
+                                Login
+                            </Button>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="raised"
+                                color="primary"
+                                className="submit"
+                                style={butonStyle}
+                                onClick={this.handleCreate}
+                            >Register
+                            </Button>
+                        </form>
+                    </Paper>
+                </main>
+            </React.Fragment>
         );
     }
+  
+
+
 }
+export default Login;
