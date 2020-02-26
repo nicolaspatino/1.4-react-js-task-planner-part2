@@ -1,5 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
- heroku : https://taskp2.herokuapp.com/
+firebase : https://task-planner-app-ffb80.firebaseapp.com/
+heroku : https://taskp2.herokuapp.com/
 
 ## Available Scripts
 
